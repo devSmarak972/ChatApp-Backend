@@ -1,6 +1,6 @@
 const User = require("../models/userModel");
 const Avatar = require("../models/avatarModel");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 module.exports.login = async (req, res, next) => {
   try {
