@@ -18,7 +18,7 @@ mongoose
   .then(() => {
     console.log("DB Connetion Successfull");
   })
-  .catch((err) => {
+  .catch(err => {
     console.log(err.message);
   });
 
@@ -30,19 +30,19 @@ const server = app.listen(process.env.PORT, () =>
 );
 const io = socket(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: process.env.FRONTEND_URL,
     credentials: true,
   },
 });
 
 global.onlineUsers = new Map();
-io.on("connection", (socket) => {
+io.on("connection", socket => {
   global.chatSocket = socket;
-  socket.on("add-user", (userId) => {
+  socket.on("add-user", userId => {
     onlineUsers.set(userId, socket.id);
   });
 
-  socket.on("send-msg", (data) => {
+  socket.on("send-msg", data => {
     const sendUserSocket = onlineUsers.get(data.to);
     if (sendUserSocket) {
       socket.to(sendUserSocket).emit("msg-recieve", data.msg);
